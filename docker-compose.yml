@@ -3,24 +3,25 @@ services:
     image: quay.io/keycloak/keycloak:26.2.5
     container_name: keycloak
     restart: unless-stopped
-    command: start --metrics-enabled
+    command: 
+      - start 
+      - --db=postgres
+      - --hostname=keycloak.our-galaxy.space
+      - --proxy-headers=xforwarded
+      - --health-enabled=true
+      - --metrics-enabled=true
+      - --http-enabled=true
     env_file:
       - .env 
+    volumes:
+      - ./themes:/opt/keycloak/themes
     environment:
-      #
       KC_HTTP_ENABLED: "true"
       #
       KC_HTTP_MANAGEMENT_ENABLED: "true"
       KC_HTTP_MANAGEMENT_PORT: "9000"
-      # Отключаем доступ к метрикам с авторизацией для Prometheus
+      # Отключаем авторизацию к метрикам для Prometheus
       KC_METRICS_AUTH: "false"
-      KC_METRICS_ENABLED: "true"
-      KC_HEALTH_ENABLED:  "true"
-      # Конфиг для проксирования
-      KC_PROXY: edge
-      KC_HOSTNAME: https://keycloak.our-galaxy.space
-      #
-      KC_HOSTNAME_STRICT: "true"
       # Блок БД
       KC_DB: postgres
       KC_DB_URL: ${KC_DB_URL} 
@@ -31,7 +32,6 @@ services:
       KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
     ports:
       - "8081:8080"
-      - "9000:9000"
     networks:
       - monitoring
 

@@ -1,0 +1,195 @@
+/* 🌌 Сброс и принудительное центрирование */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+body {
+    background: #0B1120;
+    color: #E2E8F0;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    position: relative;
+}
+
+/* Звёздный фон */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+    z-index: -2;
+}
+body::after {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-image: 
+        radial-gradient(1px 1px at 20px 30px, rgba(255,255,255,0.4), transparent),
+        radial-gradient(1px 1px at 80px 10px, rgba(255,255,255,0.6), transparent),
+        radial-gradient(1.5px 1.5px at 150px 50px, rgba(255,255,255,0.5), transparent),
+        radial-gradient(1px 1px at 200px 120px, rgba(255,255,255,0.3), transparent),
+        radial-gradient(1px 1px at 50px 180px, rgba(255,255,255,0.4), transparent);
+    background-size: 250px 250px;
+    animation: twinkle 6s ease-in-out infinite alternate;
+    z-index: -1;
+    opacity: 0.4;
+}
+
+@keyframes twinkle {
+    0% { opacity: 0.3; transform: translateY(0); }
+    100% { opacity: 0.6; transform: translateY(-2px); }
+}
+
+/* 🛠 Переопределяем контейнеры Keycloak */
+#kc-content, #kc-content-wrapper {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    min-height: 100vh !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 20px !important;
+    box-sizing: border-box;
+}
+
+/* 🪐 Карточка входа */
+.og-page-container {
+    width: 100%;
+    max-width: 420px;
+    margin: 0 auto;
+}
+
+.og-card {
+    background: rgba(15, 23, 42, 0.75);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+    padding: 40px 32px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.og-card-header {
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+.og-title {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 700;
+    color: #F8FAFC;
+    letter-spacing: 0.02em;
+}
+
+/* 📝 Поля ввода */
+.og-form-group { margin-bottom: 18px; }
+
+.og-label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 500;
+    font-size: 14px;
+    color: #94A3B8;
+}
+
+.og-input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 8px;
+    background: rgba(30, 41, 59, 0.5);
+    color: #F1F5F9;
+    font-size: 15px;
+    box-sizing: border-box;
+    transition: all 0.2s ease;
+}
+
+.og-input:focus {
+    outline: none;
+    border-color: #3B82F6;
+    background: rgba(30, 41, 59, 0.8);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+/* ✅ Чекбокс */
+.og-form-options { margin-bottom: 24px; }
+.og-checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #CBD5E1;
+}
+.og-checkbox {
+    accent-color: #3B82F6;
+    width: 16px; height: 16px;
+}
+
+/*  Кнопка */
+.og-form-actions { margin-top: 28px; }
+
+.og-btn {
+    width: 100%;
+    padding: 13px;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #3B82F6 0%, #6366F1 100%);
+    color: #FFFFFF;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25);
+}
+
+.og-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(59, 130, 246, 0.35);
+    background: linear-gradient(135deg, #2563EB 0%, #4F46E5 100%);
+}
+
+.og-btn:active { transform: translateY(0); }
+
+/* 🔗 Ссылки */
+.og-form-footer {
+    margin-top: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding-top: 16px;
+}
+
+.og-link {
+    color: #60A5FA;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+.og-link:hover { color: #93C5FD; text-decoration: underline; }
+
+/* ⚠️ Ошибки */
+.og-alert {
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    text-align: center;
+    background: rgba(239, 68, 68, 0.15);
+    color: #FCA5A5;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    font-size: 14px;
+}
+
+/* 📱 Адаптив */
+@media (max-width: 480px) {
+    .og-card { padding: 28px 20px; }
+    .og-title { font-size: 20px; }
+    .og-form-footer { flex-direction: column; gap: 12px; text-align: center; }
+}
